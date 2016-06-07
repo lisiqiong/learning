@@ -6,7 +6,7 @@ include("header.html");
 xxx, 有啥感想?
 <br>
 <table>
-<tr><td><textarea cols="70" rows="3" name="status"></textarea></td></tr>
+<tr><td><textarea cols="70" rows="3" name="content"></textarea></td></tr>
 <tr><td align="right"><input type="submit" name="doit" value="Update"></td></tr>
 </table>
 </form>
