@@ -20,4 +20,17 @@ function I($post){
     return trim($_POST[$post]);
 }
 
+
+/**
+ *@desc 判断是否登录
+ ***/
+function isLogin(){
+    $username = $_COOKIE['username'];
+    $userid = $_COOKIE['userid'];
+    if(!$username || $userid){
+        return false;
+    }
+    return array('userid'=>$userid,'username'=>$username);
+}
+
 ?>
