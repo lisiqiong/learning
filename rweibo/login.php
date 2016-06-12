@@ -16,9 +16,9 @@ $userid = $r->get("user:username:".$user.":userid");
 if(!$userid){
     error('用户不存在');
 }
-$password = $r->get("user:userid:".$userid."password:".$pass);
-if(!password){
-    exit('密码输入错误');
+$password = $r->get("user:userid:".$userid.":password");
+if($password!=$pass){
+    error('密码输入错误');
 }
 /**设置cookie登录成功**/
 setcookie('username',$user);
