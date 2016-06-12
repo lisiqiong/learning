@@ -24,5 +24,9 @@ $r->set("user:userid:".$userid.":password",$password);
 $r->set("user:username:".$username.":userid",$userid);
 setcookie('userid',$userid);
 setcookie('username',$username);
+//将最新的注册的50个userid存入到队列中
+$r->lpush('newuserlink',$userid);
+$r->ltrim('newuserlink',0,49);
+
 header("location:home.php");
 ?>

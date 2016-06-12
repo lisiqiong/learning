@@ -10,8 +10,8 @@
 <div id="header">
 <a href="/"><img style="border:none" src="redis.jpg" width="192" height="85" alt="Retwis"></a>
 <div id="navbar">
-<a href="index.php">主页</a>
-| <a href="timeline.php">热点</a>
+<a href="index.php">我的主页</a>
+| <a href="timeline.php">热门</a>
 
 | <a href="logout.php">退出</a>
 
