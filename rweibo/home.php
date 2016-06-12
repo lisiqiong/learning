@@ -1,5 +1,6 @@
 <?php
 include("header.php");
+include("function.php");
 ?>
 <div id="postform">
 <form method="POST" action="post.php">

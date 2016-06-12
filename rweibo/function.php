@@ -27,10 +27,19 @@ function I($post){
 function isLogin(){
     $username = $_COOKIE['username'];
     $userid = $_COOKIE['userid'];
-    if(!$username || $userid){
+    if(!$username || !$userid){
         return false;
     }
     return array('userid'=>$userid,'username'=>$username);
+}
+
+/**
+ *@desc error公用方法
+ **/
+function error($msg){
+    echo $msg;
+    include("bottom.php");
+    exit;
 }
 
 ?>
