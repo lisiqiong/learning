@@ -1,5 +1,5 @@
 <?php
-include("header.html");
+include("header.php");
 ?>
 <div id="welcomebox">
 <div id="registerbox">
@@ -39,5 +39,5 @@ include("header.html");
 </ul>
 </div>
 <?php
-include("bottom.html");
+include("bottom.php");
 ?>

@@ -1,5 +1,5 @@
 <?php
-include("header.html");
+include("header.php");
 ?>
 <h2>热点</h2>
 <i>最新注册用户(redis中的sort用法)</i><br>
@@ -18,5 +18,5 @@ hello<br>
 <i>22 分钟前 通过 web发布</i>
 </div>
 <?php
-include("bottom.html");
+include("bottom.php");
 ?>

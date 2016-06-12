@@ -1,5 +1,5 @@
 <?php
-include("header.html");
+include("header.php");
 ?>
 <h2 class="username">test</h2>
 <a href="follow.php?uid=1&f=1" class="button">关注ta</a>
@@ -16,5 +16,5 @@ hello<br>
 <i>22 分钟前 通过 web发布</i>
 </div>
 <?php
-include("bottom.html");
+include("bottom.php");
 ?>

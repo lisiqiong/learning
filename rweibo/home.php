@@ -1,5 +1,5 @@
 <?php
-include("header.html");
+include("header.php");
 ?>
 <div id="postform">
 <form method="POST" action="post.php">
@@ -20,5 +20,5 @@ xxx, 有啥感想?
 <i>11 分钟前 通过 web发布</i>
 </div>
 <?php
-include("bottom.html");
+include("bottom.php");
 ?>
