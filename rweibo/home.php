@@ -1,6 +1,14 @@
 <?php
 include("header.php");
 include("function.php");
+//如果没有登录调到登录页
+if(isLogin()==false){
+    header("location:index.php");
+    exit;
+}
+
+
+
 ?>
 <div id="postform">
 <form method="POST" action="post.php">
