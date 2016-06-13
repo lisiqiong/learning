@@ -4,6 +4,8 @@ include("function.php");
 if(isLogin()!=false){
     header("location:home.php");
 }
+
+
 ?>
 <div id="welcomebox">
 <div id="registerbox">
