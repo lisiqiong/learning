@@ -1,6 +1,6 @@
 <?php
-include("header.php");
 include("function.php");
+include("header.php");
 if(isLogin()==false){
    header("location:index.php");
    exit;

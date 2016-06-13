@@ -1,6 +1,6 @@
 <?php
-include("header.php");
 include("function.php");
+include("header.php");
 $r = redis_connect();
 if(!isLogin()){
     header("location:index.php");
@@ -8,12 +8,10 @@ if(!isLogin()){
 }
 $newuserlist = array();
 $newuserlist = $r->sort('newuserlink',array('sore'=>'desc','get'=>'user:userid:*:username'));
-
 ?>
 <h2>热点</h2>
 <i>最新注册用户(redis中的sort用法)</i><br>
 <div>
-
 <?php
     foreach($newuserlist as $k=>$v){
 ?>
