@@ -19,7 +19,6 @@ $r->set("post:postid:".$postid.":userid",$user['userid']);
 $r->set("post:postid:".$postid.":content",$content);
 
 header("location:home.php");
-exit();
-
+exit;
 include("bottom.php");
 ?>
