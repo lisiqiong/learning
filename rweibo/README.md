@@ -18,3 +18,14 @@ set post:postid:3:content 测试发布哈哈哈哈<br/>
 incr global:postid<br/>
 set post:postid:$postidcho "用户名密码不能够为空!";<br/>
 
+#关注微博following
+following:3<br/>
+#被关注<br/>
+followed:3<br/>
+
+#把微博推给自己的粉丝<br/>
+recivepost:10 postid<br/>
+
+
+
+
