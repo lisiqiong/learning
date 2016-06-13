@@ -7,19 +7,20 @@ if(isLogin()==false){
 }
 $r = redis_connect();
 $username = trim($_GET['u']);
-$userid = $r->get("user:username:".$username.":userid");
-if(!$userid){
-    error('非法登录');
+$prouid = $r->get("user:username:".$username.":userid");
+if(!$prouid){
+    header("location:index.php");
     exit;
 }
+$user = isLogin();
 //判断用户判断该用户是否被关注
-$isFollow = $r->sismember("following:".$username,$userid);
-$f_status = $isFollow?1:0;
-$FollowStr = $isF?'取消关注':'关注他';
+$isFollow = $r->sismember("following:".$user['userid'],$prouid);
+$f_status = $isFollow?'1':'0';
+$FollowStr = $f_status?'取消关注':'关注他';
 
 ?>
 <h2 class="username"><?php echo $username;?></h2>
-<a href="follow.php?uid=<?php echo $userid;?>&f=<?php echo $f_status;?>" class="button"><?php echo $FollowStr;?></a>
+<a href="follow.php?uid=<?php echo $prouid;?>&f=<?php echo $f_status;?>" class="button"><?php echo $FollowStr;?></a>
 
 <div class="post">
 <a class="username" href="profile.php?u=test">test</a> 
