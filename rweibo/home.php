@@ -31,14 +31,14 @@ $mystar = $r->sCard("following:".$user['userid']);
 <?php echo $mystar;?> 关注<br>
 </div>
 </div>
-<div class="post">
 <?php 
     foreach($newposter as $v){
 ?>
+<div class="post">
 <a class="username" href="profile.php?u=test">test</a><?php echo $v;?><br>
-<i>11 分钟前 通过 web发布</i><br/>
-<?php }?>
+<i>11 分钟前 通过 web发布</i>
 </div>
 <?php
+}
 include("bottom.php");
 ?>

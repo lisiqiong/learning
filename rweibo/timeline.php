@@ -10,7 +10,7 @@ $newuserlist = array();
 $newuserlist = $r->sort('newuserlink',array('sore'=>'desc','get'=>'user:userid:*:username'));
 ?>
 <h2>热点</h2>
-<i>最新注册用户(redis中的sort用法)</i><br>
+<i>最新注册用户</i><br>
 <div>
 <?php
     foreach($newuserlist as $k=>$v){
