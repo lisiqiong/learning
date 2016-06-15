@@ -1,6 +1,7 @@
 <?php
 include("function.php");
 include("header.php");
+//afdafsa
 $username = I('username');
 $password = I('password');
 $pwd = I('password2');
