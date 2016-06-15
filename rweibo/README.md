@@ -2,6 +2,7 @@
 1.完全采用redis作为数据库实现微博的登录<br/>
 2.发布<br/>
 3.微博的显示<br/>
+4.实现整个功能使用了redis的string，list，hashes四个数据类型，以及string类型的数值自增功能<br/>
 
 #学习使用redis建立合适的数据类型来满足需求<br/>
 #一、用户信息<br/>
@@ -24,7 +25,7 @@ hset post:postid:$postid userid 2       （存储微博的用户id）<br/>
 hset post:postid:$postid username dongzi                    （存储微博的用户id）<br/>
 hset post:postid:$postid time      1466020851                （存储微博的发布时间）<br/>
 hset post:postid:$postid content     这是一条微博内容         （存储微博内容）<br/>
-​
+
 2.获取用户的所有粉丝及用户自身的id<br/>
 smembers followed:2   （获取用户id2的所有粉丝）<br/>
 
