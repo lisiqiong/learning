@@ -37,12 +37,12 @@ if(isLogin()!=false){
 </tr></table>
 </form>
 </div>
-介绍! Retwis  是一个简单的<a href="http://twitter.com">Twitter</a>
-克隆, 也是<a href="http://code.google.com/p/redis/">Redis</a> key-value 数据库的一个使用安全. 关键点:
 <ul>
 <li>Redis 是一种key-value 数据库, 而且是本项目中 <b>唯一</b>使用的数据库, 没有用mysql等.</li>
 <li>应用程序可以通过一致性哈希轻易的部署多台服务器</li>
-<li>PHP与redis服务器的连接用pecl的官方扩展<a href="pecl.php.net/package/redis">php-redis</a>
+<li>我的github:<a href="https://github.com/lisiqiong" target="_blank"  >https://github.com/lisiqiong</a></li>
+<li>新浪博客:<a href="http://blog.sina.com.cn/lisiqiong2012" target="_blank" >http://blog.sina.com.cn/lisiqiong2012</a></li>
+<li>新浪微博:lisiqiong2012</li>
 </ul>
 </div>
 <?php

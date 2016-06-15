@@ -36,15 +36,14 @@ $mystar = $r->sCard("following:".$user['userid']);
 */
 $r->ltrim("recivepost:".$user['userid'],0,49);
 $postid_arr = $r->sort("recivepost:".$user['userid'],array('sort'=>'desc'));
-foreach($postid_arr as $postid){
-    $p = $r->hmget("post:postid:".$postid,array('username','userid','time','content'));
-?>
-<div class="post">
-    <a class="username" href="profile.php?u=<?php echo $p['username'];?>" ><?php echo $p['username']?></a>
-    <?php echo $p['content'];?><br/>
-    <i><?php echo formattime($p['time']);?>前发布</i>
-</div>
-<?php
+if($postid_arr){
+    foreach($postid_arr as $postid){
+        $p = $r->hmget("post:postid:".$postid,array('userid','username','time','content'));
+        $weiboList .=  '<div class="post"><a class="username" href="profile.php?u='.$p['username'].'">'.$p['username'].'</a>'.$p['content'].'<br><i>'.formattime($p['time']).'前发布</i></div>'; 
+    }
+    echo $weiboList;
+}else{
+    echo '<div class="post" >这个家伙很懒，还未发布消息哦~</div>';
 }
 include("bottom.php");
 ?>
