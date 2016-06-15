@@ -22,17 +22,7 @@ $FollowStr = $f_status?'取消关注':'关注他';
 <h2 class="username"><?php echo $username;?></h2>
 <a href="follow.php?uid=<?php echo $prouid;?>&f=<?php echo $f_status;?>" class="button"><?php echo $FollowStr;?></a>
 
-<div class="post">
-<a class="username" href="profile.php?u=test">test</a> 
-world<br>
-<i>11 分钟前 通过 web发布</i>
-</div>
-
-<div class="post">
-<a class="username" href="profile.php?u=test">test</a>
-hello<br>
-<i>22 分钟前 通过 web发布</i>
-</div>
 <?php
+echo showWeiboList($prouid);
 include("bottom.php");
 ?>

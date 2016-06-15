@@ -37,7 +37,8 @@ if(isLogin()!=false){
 </tr></table>
 </form>
 </div>
-介绍! Retwis  是一个简单的<a href="http://twitter.com">Twitter</a>克隆, 也是<a href="http://code.google.com/p/redis/">Redis</a> key-value 数据库的一个使用安全. 关键点:
+介绍! Retwis  是一个简单的<a href="http://twitter.com">Twitter</a>
+克隆, 也是<a href="http://code.google.com/p/redis/">Redis</a> key-value 数据库的一个使用安全. 关键点:
 <ul>
 <li>Redis 是一种key-value 数据库, 而且是本项目中 <b>唯一</b>使用的数据库, 没有用mysql等.</li>
 <li>应用程序可以通过一致性哈希轻易的部署多台服务器</li>

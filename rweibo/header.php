@@ -11,7 +11,7 @@ $user = isLogin();
 <body>
 <div id="page">
 <div id="header">
-<a href="/"><img style="border:none" src="redis.jpg" width="192" height="85" alt="Retwis"></a>
+<a href="/"><img style="border:none" src="redis.jpg" width="400" height="86" alt="Retwis"></a>
 <div id="navbar">
 <a href="index.php">我的主页</a>
 | <a href="timeline.php">热门</a>

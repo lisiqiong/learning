@@ -14,9 +14,11 @@ if($user==false){
 
 $r = redis_connect();
 $postid = $r->incr('global:postid');
-$r->set("post:postid:".$postid.":time",time());
-$r->set("post:postid:".$postid.":userid",$user['userid']);
-$r->set("post:postid:".$postid.":content",$content);
+//$r->set("post:postid:".$postid.":time",time());
+//$r->set("post:postid:".$postid.":userid",$user['userid']);
+//$r->set("post:postid:".$postid.":content",$content);
+
+$r->hmset("post:postid:".$postid,array('userid'=>$user['userid'],'username'=>$user['username'],'time'=>time(),'content'=>$content));
 
 //把微博推给自己的粉丝
 $fans = $r->smembers("followed:".$user['userid']);

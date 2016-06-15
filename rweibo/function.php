@@ -46,4 +46,33 @@ function error($msg){
     exit;
 }
 
+function showWeiboList($userid){
+    $r = redis_connect();
+    $r->ltrim('recivepost:'.$userid,0,49);
+    $newposter = $r->sort('recivepost:'.$userid,array('sort'=>'desc'));
+    $weiboList = "";
+    if($newposter){
+        foreach($newposter as $postid){
+            $p = $r->hmget("post:postid:".$postid,array('userid','username','time','content'));
+            $weiboList .=  '<div class="post"><a class="username" href="profile.php?u='.$p['username'].'">'.$p['username'].'</a>'.$p['content'].'<br><i>'.formattime($p['time']).'前发布</i></div>'; 
+        }
+    }
+    return $weiboList;
+}
+
+function formattime($time){
+    $restime = time()-$time;
+    if($restime>=86400){
+        return floor($restime/86400)."天";
+    }else if($restime>=3600){
+        return floor($restime/3600)."时";
+    }else if($restime>=60){
+        return floor($restime/60)."分";
+    }else{
+        return $restime."秒";
+    }
+
+}
+
+
 ?>
