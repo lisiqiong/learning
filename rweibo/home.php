@@ -8,8 +8,8 @@ if($user==false){
     exit;
 }
 $r = redis_connect();
-//取出自己发的和粉主推过来的信息
-$newposter = showWeiboList($user['userid']);
+//获取微博信息列表
+//$newposter = showWeiboList($user['userid']);
 //计算几个粉丝，几个关注
 $myfans = $r->sCard("followed:".$user['userid']);
 $mystar = $r->sCard("following:".$user['userid']);
@@ -30,6 +30,21 @@ $mystar = $r->sCard("following:".$user['userid']);
 </div>
 </div>
 <?php
-echo $newposter;
+/*获取最新的50微博信息列表,列出自己发布的微博及我关注用户的微博
+*1.根据推送的信息获取postid
+*2.根据postid获取发送的信息
+*/
+$r->ltrim("recivepost:".$user['userid'],0,49);
+$postid_arr = $r->sort("recivepost:".$user['userid'],array('sort'=>'desc'));
+foreach($postid_arr as $postid){
+    $p = $r->hmget("post:postid:".$postid,array('username','userid','time','content'));
+?>
+<div class="post">
+    <a class="username" href="profile.php?u=<?php echo $p['username'];?>" ><?php echo $p['username']?></a>
+    <?php echo $p['content'];?><br/>
+    <i><?php echo formattime($p['time']);?>前发布</i>
+</div>
+<?php
+}
 include("bottom.php");
 ?>

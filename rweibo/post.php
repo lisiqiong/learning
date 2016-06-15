@@ -3,7 +3,7 @@ include("function.php");
 include("header.php");
 $content = I('content');
 if(!$content){
-    exit('内容不能够为空');
+    error('内容不能够为空');
 }
 
 $user = isLogin();
@@ -26,6 +26,8 @@ $fans[] = $user['userid'];
 foreach($fans as $fansid){
     $r->lpush('recivepost:'.$fansid,$postid);
 }
+//单独累计个人发布的信息
+$r->lpush('userpostid:'.$user['userid'],$postid);
 header("location:home.php");
 exit;
 include("bottom.php");
