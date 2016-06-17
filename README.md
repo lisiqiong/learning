@@ -5,3 +5,4 @@
 2.xunsearch：xunsearch学习<br/>
 3.s_redis:redis学习<br/>
 4.rweibo:使用reids开发一个微博的小例子<br/>
+5.nginx结合lua代码实现鉴权<br/>
