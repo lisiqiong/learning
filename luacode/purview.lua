@@ -19,14 +19,22 @@ if not ok then
     return
 end
 
+local keys = "ttq:192.168.3.2"
 ngx.say("select result: ", ok)
-ok, err = red:set("dog", "an animal")
-if not ok then
-    ngx.say("failed to set dog: ", err)
+local res,err = red:get(keys)
+ngx.say("redis获取key成功，值为：",err)
+ngx.say(res)
+print(type(res))
+if not res  then
+    ngx.say("该项目不可以操作")
     return
 end
-local dogstr = red:get("dog");
-ngx.say("redis获取key成功，值为：",dogstr);
+
+--ok, err = red:set("ttq:192.168.3.2", "192.168.3.2")
+--if not ok then
+  --  ngx.say("failed to set dog: ", err)
+    --return
+--end
 
 local mysql = require "resty.mysql"
 local db, err_mysql = mysql:new()
@@ -45,18 +53,20 @@ local ok, err_mysql, errno, sqlstate = db:connect{
              max_packet_size = 1024 * 1024 
 }
 
+
 if not ok then
     ngx.say("failed to connect: ", err_mysql, ": ", errno, " ", sqlstate)
     return
 end
 --ngx.say("connected to mysql.")
-sql = "select * from a limit 2"
+sql = "select * from a limit 1"
 res, err, errno, sqlstate = db:query(sql)
 if not res then
     ngx.say("bad result: ", err, ": ", errno, ": ", sqlstate, ".")
     return
 end
---ngx.say(cjson.encode(res))
+
+ngx.say(res)
 local code = 'cs';
 arr_return['mes'] = "成功",code;
 arr_return['stauts'] = 1;
