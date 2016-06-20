@@ -1,7 +1,6 @@
 --调用json公共组件
 local cjson = require "cjson"
-local redis_config = {host='127.0.0.1',pass='123456',port=6379} --redis配置项 
-local mysql_config = {host='127.0.0.1',port=3306,database='test',user='root',password='123456'} --mysql的配置项
+
 --返回json信息公用方法
 function resJson(status,mes)
 	local arr_return = {}
@@ -43,37 +42,24 @@ for k,v in pairs(arg) do
 end
 
 
---将获取的变量拆分为table类型
+
 local ta_get  = lua_string_split(get_info,":")
 project = ta_get[1]
 ip = ta_get[2]
+
 
 --连接redis
 local redis = require "resty.redis"
 local red = redis:new()
 red:set_timeout(1000) -- 1 sec
-local ok, err = red:connect(redis_config['host'],redis_config['port'])
+local ok, err = red:connect("127.0.0.1", 6379)
 if not ok then
-	ngx.say(resJson(-1,"failed to connect redis"))
+	ngx.say(resJson(-5,"failed to connect redis"))
 	return
 end
---设置redis密码
-local count
-count, err = red:get_reused_times()
-if 0 == count then
-    ok, err = red:auth(redis_config['pass'])
-    if not ok then
-        ngx.say(resJson(-1,"redis failed to auth"))
-        return
-    end
-elseif err then
-    ngx.say(resJson(-1,"redis failed to get reused times"))
-    return
-end
---选择redis数据库
 ok, err = red:select(0)
 if not ok then
-	ngx.say(resJson(-1,"redis connect failed"))    
+	ngx.say(resJson(-3,"redis connect failed"))    
 	return
 end
 
@@ -81,21 +67,21 @@ end
 local mysql = require "resty.mysql"
 local db, err_mysql = mysql:new()
 if not db then
-    ngx.say(resJson(-1,"failed to instantiate mysql: "))
+    ngx.say(resJson(-4,"failed to instantiate mysql: "))
     return
 end
 db:set_timeout(1000) -- 1 sec
 local ok, err_mysql, errno, sqlstate = db:connect{
-     host = mysql_config['host'],
-             port = mysql_config['port'],
-             database = mysql_config['database'],
-             user = mysql_config['user'],
-             password = mysql_config['password'],
+     host = "127.0.0.1",
+             port = 3306,
+             database = "test",
+             user = "root",
+             password = "123456",
              max_packet_size = 1024 * 1024 
 }
 if not ok then
    -- ngx.say("failed to connect: ", err_mysql, ": ", errno, " ", sqlstate)
-	ngx.say(resJson(-1,"mysql connect failed"))
+	ngx.say(resJson(-2,"mysql connect failed"))
     return
 end
 
