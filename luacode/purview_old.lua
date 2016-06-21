@@ -1,6 +1,6 @@
 --调用json公共组件
 local cjson = require "cjson"
-
+--[[
 --返回json信息公用方法
 function resJson(status,mes)
 	local arr_return = {}
@@ -109,3 +109,4 @@ end
 ngx.say(resJson(0,"该项目鉴权成功,可以访问!"))
 
 
+--]]
