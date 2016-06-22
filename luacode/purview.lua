@@ -4,24 +4,45 @@ local fun = require("ttq.fun") -- 引用公用方法文件
 local redis_config = {host='127.0.0.1',pass='123456',port=6379} --redis配置项 
 local mysql_config = {host='127.0.0.1',port=3306,database='test',user='root',password='123456'} --mysql的配置项
 
---接收变量
-local arg = ngx.req.get_uri_args()
-local get_info,project,ip,appid
+--接收POST过来的数据
+ngx.req.read_body()
+local arg = ngx.req.get_post_args()
+local arg_count = 0 --存储参数个数
+local arg_table = {appid,ip,appkey}
+local appid,ip,appkey
+local get_info --参数拼接字符串，方便redis操作
+--遍历post过来的参数
 for k,v in pairs(arg) do
-   get_info = v
-    --ngx.say("[GET ] key:", k, " v:", v)
+    arg_count = arg_count+1
+    arg_table[k] = v
 end
 
---验证传递的参数是否合法
---if get_info == ngx.null then
-  --  ngx.say(resJson(-1,"参数传递错误，非法操作，被拦截"));
---end
+--参数赋值
+appid = arg_table['appid'] 
+ip = arg_table['ip']
+appkey = arg_table['appkey']
 
---将获取的变量拆分为table类型
-local ta_get  = fun.lua_string_split(get_info,":")
-project = ta_get[1]
-ip = ta_get[2]
-appid = ta_get[3]
+--参数校验,默认只有三个参数
+if arg_count == 3 then
+   if string.len(appid) == 0 then
+        ngx.say(fun.resJson(-1,'参数传递错误'))
+        return
+   end
+   if string.len(ip) == 0 then 
+        ngx.say(fun.resJson(-1,'参数传递错误'))
+        return
+   end
+   if string.len(appkey) == 0 then 
+        ngx.say(fun.resJson(-1,'参数传递错误'))
+        return
+   end
+else
+    ngx.say(fun.resJson(-1,'参数传递错误，被拦截'))
+    return
+end
+
+--参数校验通过，将参数拼接
+get_info = string.format("%s:%s:%s",appid,ip,appkey)
 
 
 --连接redis
@@ -85,21 +106,21 @@ end
 local res,err = red:get(get_info)
 if res == ngx.null then
     --数据找到了,根据appid查询，查询信息是否一致
-    local sql_appid =  string.format("select * from ttq_appid_list   where appid= '%s' limit 1 ",appid)   
+    local sql_appid =  string.format("select * from ttq_appid_list   where appid= '%s' and appkey='%s'   limit 1 ",appid,appkey)   
     res = db:query(sql_appid)
     if table.maxn(res)== 0 then
-        ngx.say(fun.resJson(-1,'找不到您传递的appid，被拦截'))
+        ngx.say(fun.resJson(-1,'appid验证失败，被拦截'))
         return
     end
     --appid获取的项目名与参数传递的是否一致
-    local project_name = res[1]['project_name']
-    if project_name~=project then
+    local project_name = res[1]['appid']
+    if project_name~=appid then
         ngx.say(fun.resJson(-1,"appid验证失败，未找到指定项目，被拦截"))
         return
     end
 
     --项目权限获取成功，需要验证ip是否被允许
-    local sql = string.format("select * from ttq_white_list where project_name='%s' and ip= '%s' limit 1 ",project,ip)
+    local sql = string.format("select * from ttq_appid_white_list where appid='%s' and ip= '%s' limit 1 ",appid,ip)
     res = db:query(sql)
     if table.maxn(res)==0 then
 		--ngx.say("bad result: ", err, ": ", errno, ": ", sqlstate, ".")
