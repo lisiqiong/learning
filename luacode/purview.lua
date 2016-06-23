@@ -1,8 +1,7 @@
 --调用json公共组件
 cjson = require "cjson"
 local fun = require("ttq.fun") -- 引用公用方法文件
-local redis_config = {host='127.0.0.1',pass='123456',port=6379} --redis配置项 
-local mysql_config = {host='127.0.0.1',port=3306,database='test',user='root',password='123456'} --mysql的配置项
+local conf = require("ttq.ini") --引用配置文件
 
 --接收POST过来的数据
 ngx.req.read_body()
@@ -49,7 +48,7 @@ get_info = string.format("%s:%s:%s",appid,ip,appkey)
 local redis = require "resty.redis"
 local red = redis:new()
 red:set_timeout(1000) -- 1 sec
-local ok, err = red:connect(redis_config['host'],redis_config['port'])
+local ok, err = red:connect(conf.redis()['host'],conf.redis()['port'])
 if not ok then
 	ngx.say(fun.resJson(-1,"failed to connect redis"))
 	return
@@ -58,7 +57,7 @@ end
 local count
 count, err = red:get_reused_times()
 if 0 == count then
-    ok, err = red:auth(redis_config['pass'])
+    ok, err = red:auth(conf.redis()['pass'])
     if not ok then
         ngx.say(fun.resJson(-1,"redis failed to auth"))
         return
@@ -83,11 +82,11 @@ if not db then
 end
 db:set_timeout(1000) -- 1 sec
 local ok, err_mysql, errno, sqlstate = db:connect{
-     host = mysql_config['host'],
-             port = mysql_config['port'],
-             database = mysql_config['database'],
-             user = mysql_config['user'],
-             password = mysql_config['password'],
+     host = conf.mysql()['host'],
+             port = conf.mysql()['port'],
+             database = conf.mysql()['database'],
+             user = conf.mysql()['user'],
+             password = conf.mysql()['password'],
              max_packet_size = 1024 * 1024 
 }
 if not ok then
