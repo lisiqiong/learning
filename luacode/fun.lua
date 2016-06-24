@@ -31,4 +31,41 @@ function _M.lua_string_split(str, split_char)
 end
 
 
+--检测post过来的参数合法性
+function _M.check_post_arg()
+    local rule_count =  3
+    --接收POST过来的数据
+    ngx.req.read_body()
+    local arg = ngx.req.get_post_args()
+    local arg_count = 0 --存储参数个数
+    local arg_table = {appid,ip,appkey}
+    local get_info --参数拼接字符串，方便redis操作
+    --遍历post过来的参数
+    for k,v in pairs(arg) do
+        arg_count = arg_count+1
+        arg_table[k] = v
+    end
+
+    --参数赋值
+    appid = arg_table['appid'] 
+    ip = arg_table['ip']
+    appkey = arg_table['appkey']
+    --判断参数个数传递过来的参数要与规定的个数一致
+    if rule_count == arg_count then
+        if string.len(appid) == 0 then
+            return  {status=-1,msg='参数传递错误，被拦截'}
+        end
+        if string.len(ip) == 0 then 
+            return  {status=-1,msg='参数传递错误，被拦截'}
+        end
+        if string.len(appkey) == 0 then 
+            return  {status=-1,msg='参数传递错误，被拦截'}
+        end 
+        ---参数正确返回参数信息
+        return  {status=0,msg='参数校验成功',arg_tables=arg_table}
+    else
+        return  {status=-1,msg='参数传递错误，被拦截'}
+    end
+end
+
 return _M
