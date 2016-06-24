@@ -1,7 +1,7 @@
 local redis = require("resty.redis")
 local redis_pool = {}
 --连接redis
-function redis_pool.get_connect()
+function redis_pool:get_connect()
     if ngx.ctx[redis_pool] then
         return true,"redis连接成功",ngx.ctx[redis_pool]
     end
@@ -31,22 +31,34 @@ function redis_pool.get_connect()
     return true,'redis连接成功',ngx.ctx[redis_pool]
 end
 
+--关闭连接池
+function redis_pool:close()
+    if ngx.ctx[redis_pool] then
+        ngx.ctx[redis_pool]:set_keepalive(60000, 300)
+        ngx.ctx[redis_pool] = nil
+    end
+end
 
 ---获取key的值
-function redis_pool.get_key(str)
-    local res,err,client = redis_pool:get_connect()
+function redis_pool:get_key(str)
+    local res,err,client = self:get_connect()
     if not res then
         return false,err
     end
-    local keys = client:get("ttq:192.168.3.3:67872")
+    local keys = client:get(str)
+    --self:close()
     return true,"获取key成功",keys
 end
 
 --设置key的值
-function redis_pool.set_key(str,value)
-    local res,err,client = redis_pool:get_connect()
-    client:set("ttq:192.168.4.3",1)
-    return true
+function redis_pool:set_key(str,value)
+    local res,err,client = self:get_connect()
+    if not res then
+        return false,err
+    end
+    client:set(str,value)
+    --self:close()
+    return true,"成功设置key"
 end
 
 return redis_pool

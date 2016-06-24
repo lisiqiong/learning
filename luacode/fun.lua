@@ -1,7 +1,7 @@
 local _M = {}
 
 --返回json信息公用方法
-function _M.resJson(status,mes)
+function _M:resJson(status,mes)
 	local arr_return = {}
 	arr_return['status'] = status
 	arr_return['msg'] = mes
@@ -11,7 +11,7 @@ end
 
 
 --字符串按指定字符拆分公用方法
-function _M.lua_string_split(str, split_char)    
+function _M:lua_string_split(str, split_char)    
     local sub_str_tab = {}; 
     while (true) do        
         local pos = string.find(str, split_char);  
@@ -32,7 +32,7 @@ end
 
 
 --检测post过来的参数合法性
-function _M.check_post_arg()
+function _M:check_post_arg()
     local rule_count =  3
     --接收POST过来的数据
     ngx.req.read_body()
